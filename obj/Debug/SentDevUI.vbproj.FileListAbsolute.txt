@@ -1,0 +1,11 @@
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\bin\Debug\SentDevUI.exe.config
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\bin\Debug\SentDevUI.exe
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\bin\Debug\SentDevUI.pdb
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\bin\Debug\SentDevUI.xml
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\obj\Debug\SentDevUI.vbprojResolveAssemblyReference.cache
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\obj\Debug\SentDevUI.Form1.resources
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\obj\Debug\SentDevUI.Resources.resources
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\obj\Debug\SentDevUI.vbproj.GenerateResource.Cache
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\obj\Debug\SentDevUI.exe
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\obj\Debug\SentDevUI.xml
+C:\Users\Dmitry\Documents\GitHub\FIRMWARE\SentDevUI\SentDevUI\obj\Debug\SentDevUI.pdb
