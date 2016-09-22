@@ -5,9 +5,15 @@ Imports System.ComponentModel
 
 
 
+
+
+
+
 Public Class Form1
 
     Dim availablePorts As Array
+
+
 
 
     'Dim portButton As New System.Windows.Forms.Button()  'adds a new instance of the class "button" (like a prefix)
@@ -21,6 +27,10 @@ Public Class Form1
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If Not terminal.TextLength Then terminal.AppendText(" >")  'add a ">" caret to the terminal if there isn't one
+
+
 
 
         SerialPort1.Open()
@@ -39,22 +49,39 @@ Public Class Form1
     End Sub
 
     Private Sub ReceivedText(ByVal [text] As String)
-        If Me.tb_input.InvokeRequired Then
+        If Me.terminal.InvokeRequired Then
             Dim x As New setTextCallBack(AddressOf ReceivedText)
             Me.Invoke(x, New Object() {(text)})
+
         Else
-            Me.tb_input.Text &= [text]
+            'add the latest shell message from the sentroller to the terminal
+            [text] = terminal.Text.Substring(1) & ">" & [text]
+            If [text].Last <> ">" Then [text] &= ">"
+            terminal.ResetText()
+            terminal.Text &= [text]
+            terminal.SelectionStart = terminal.TextLength   'send cursor to end
         End If
+
     End Sub
 
-    Private Sub button_send_Click(sender As Object, e As EventArgs) Handles button_send.Click
-        SerialPort1.WriteLine(tb_output.Text)
-    End Sub
 
-    Private Sub tb_output_KeyDown(sender As Object, e As KeyEventArgs) Handles tb_output.KeyDown
+
+    Private Sub terminal_KeyDown(sender As Object, e As KeyEventArgs) Handles terminal.KeyDown
         If e.KeyData = Keys.Enter Then
-            SerialPort1.WriteLine(tb_output.Text)
-            tb_output.Text = ""
+
+            Dim tx_buffer As String
+
+            Dim i As Integer = terminal.TextLength - 1
+            While terminal.Text(i) <> ">" And terminal.Text(i) <> vbLf
+
+                tx_buffer = terminal.Text(i) & tx_buffer
+                If i > 0 Then i -= 1 Else Exit While
+            End While
+            terminal.Text = terminal.Text.Remove(i )  'remove TX_buffer from terminal text (it echos back from sentroller)
+            terminal.Text.Replace(vbLf, "")
+
+            SerialPort1.WriteLine(tx_buffer)
+
         End If
     End Sub
 End Class
