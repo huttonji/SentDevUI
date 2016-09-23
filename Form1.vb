@@ -6,32 +6,27 @@ Imports System.Management
 
 
 
-
-
-
-
 Public Class Form1
+
+    'declare constants (this will be a generated excel file later on...)
+    Public Const shellLockoutPassword = "pa55word"
+    Public Const shellLockoutDissable = "shellLockoutDissable"
+    Public Const UIcontrolPassword = "UI requesting control..."
+
+
+
+    Dim lastTerminalKey As Keys = Keys.Enter     'for making sure blank commands are ignored (initialized as enter)(see terminal_keydown())
 
     Dim availablePorts As Array
 
-
-
-
-    'Dim portButton As New System.Windows.Forms.Button()  'adds a new instance of the class "button" (like a prefix)
-
-
     Delegate Sub setTextCallBack(ByVal [text] As String)  'a delegate points to a function (unknown before runtime)
-
-    Private Sub serial_disconnect(sender As Object, e As SerialPinChangedEventArgs) Handles SerialPort1.PinChanged
-        MsgBox(e)
-    End Sub
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 
 
-        availablePorts = IO.Ports.SerialPort.GetPortNames
+        availablePorts = SerialPort.GetPortNames
 
 
 
@@ -47,6 +42,7 @@ Public Class Form1
     'Incoming Serial handling///////////////////////////////////////////////////
     Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
         ReceivedText(SerialPort1.ReadExisting)
+
     End Sub
 
     Private Sub ReceivedText(ByVal [text] As String)
@@ -87,16 +83,14 @@ Public Class Form1
 
 
     Private Sub terminal_KeyDown(sender As Object, e As KeyEventArgs) Handles terminal.KeyDown
+
+
         If e.KeyData = Keys.Enter Then
 
-            If terminal.Text.Last = ">" Then                    'if no command written, ignore the enter key
-                terminal.Text.Remove(terminal.TextLength - 2)
-                terminal.SelectionStart = terminal.TextLength
-                Exit Sub
-            End If
+            If lastTerminalKey = Keys.Enter Then e.SuppressKeyPress = True : Exit Sub    'leave sub, ignoring "enter" press if nothing was typed
+
 
             Dim tx_buffer As String
-
             Dim i As Integer = terminal.TextLength - 1
             While terminal.Text(i) <> ">" And terminal.Text(i) <> vbLf
 
@@ -111,24 +105,25 @@ Public Class Form1
 
 
         End If
+        lastTerminalKey = e.KeyData
     End Sub
 
 
 
     'exit button event
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-
+        SerialPort1.Dispose()
         SerialPort1.Close()
 
 
-        'Dim msgboxresponse As MsgBoxResult
-        'msgboxresponse = MsgBox("Are you sure you want to exit?",
-        '                        MsgBoxStyle.Question + MsgBoxStyle.YesNo, Me.Text)
-        'If msgboxresponse <> MsgBoxResult.Yes Then
-        '    e.Cancel = True
-        '    Return
-        'End If
-
+        Dim msgboxresponse As MsgBoxResult
+        msgboxresponse = MsgBox("Are you sure you want to exit?",
+        MsgBoxStyle.Question + MsgBoxStyle.YesNo, Me.Text)
+        If msgboxresponse <> MsgBoxResult.Yes Then
+            e.Cancel = True
+            Return
+        End If
+        MsgBox("Fine...fuck you then.........bitch...")
     End Sub
 
     Private Sub SentrollerSearch_Tick(sender As Object, e As EventArgs) Handles SentrollerSearch.Tick
@@ -150,7 +145,8 @@ Public Class Form1
                         COM_name = COM_name.Remove(COM_name.IndexOf(")"))
                         SerialPort1.PortName = COM_name
                         Try
-                            SerialPort1.Open()
+                            SerialPort1.Open()      'open comms with suspected Sentroller (USB serial device)
+                            SerialPort1.WriteLine(shellLockoutPassword)
                         Catch
                         End Try
                         Label1.Visible = False
@@ -175,9 +171,7 @@ Public Class Form1
     End Sub
 
 
-    Private Sub ProgressBar1_Click(sender As Object, e As EventArgs)
 
-    End Sub
 
 
 End Class

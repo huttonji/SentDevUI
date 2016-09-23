@@ -28,6 +28,8 @@ Partial Class Form1
         Me.terminal = New System.Windows.Forms.RichTextBox()
         Me.SentrollerSearch = New System.Windows.Forms.Timer(Me.components)
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.bPW = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'SerialPort1
@@ -63,11 +65,31 @@ Partial Class Form1
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "Connect a Sentroller to begin..."
         '
+        'bPW
+        '
+        Me.bPW.Location = New System.Drawing.Point(963, 120)
+        Me.bPW.Name = "bPW"
+        Me.bPW.Size = New System.Drawing.Size(224, 23)
+        Me.bPW.TabIndex = 5
+        Me.bPW.Text = "send: ""pa55word"""
+        Me.bPW.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(943, 484)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 6
+        Me.Button2.Text = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1417, 911)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.bPW)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.terminal)
         Me.Location = New System.Drawing.Point(2000, 30)
@@ -82,4 +104,6 @@ Partial Class Form1
     Friend WithEvents terminal As RichTextBox
     Friend WithEvents SentrollerSearch As Timer
     Friend WithEvents Label1 As Label
+    Friend WithEvents bPW As Button
+    Friend WithEvents Button2 As Button
 End Class
