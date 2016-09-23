@@ -158,8 +158,7 @@ Public Class Form1
                         terminal.ReadOnly = False
                         terminal.SelectionStart = terminal.TextLength
                         If terminal.TextLength = 0 Then
-                            terminal.SelectionColor = Color.Red
-                            terminal.AppendText("CONNECTED" & vbLf)
+
                             terminal.SelectionColor = Color.Aqua
                             terminal.AppendText(">")
 
