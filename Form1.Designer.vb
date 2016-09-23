@@ -3,8 +3,9 @@ Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+
         Try
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
@@ -33,7 +34,11 @@ Partial Class Form1
         '
         'terminal
         '
-        Me.terminal.Location = New System.Drawing.Point(350, 34)
+        Me.terminal.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.terminal.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.terminal.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.terminal.ForeColor = System.Drawing.Color.Lime
+        Me.terminal.Location = New System.Drawing.Point(351, 77)
         Me.terminal.Name = "terminal"
         Me.terminal.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None
         Me.terminal.ShowSelectionMargin = True

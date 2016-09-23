@@ -55,11 +55,24 @@ Public Class Form1
 
         Else
             'add the latest shell message from the sentroller to the terminal
-            [text] = terminal.Text.Substring(1) & ">" & [text]
-            If [text].Last <> ">" Then [text] &= ">"
-            terminal.ResetText()
-            terminal.Text &= [text]
-            terminal.SelectionStart = terminal.TextLength   'send cursor to end
+            Dim rx As String() = [text].Split(vbLf)
+            rx(0) = ">" & rx(0)
+            For i As Int16 = 1 To rx.Length - 1
+                terminal.SelectionStart = terminal.TextLength
+                If rx(i)(0) <> ">" Then
+                    terminal.SelectionColor = Color.Lime
+                Else
+                    terminal.SelectionColor = Color.Aqua
+                End If
+
+                terminal.AppendText(rx(i))
+                '  terminal.SelectionLength = rx(i).Length
+
+
+
+            Next
+            terminal.SelectionStart = terminal.TextLength
+
         End If
 
     End Sub
@@ -77,11 +90,27 @@ Public Class Form1
                 tx_buffer = terminal.Text(i) & tx_buffer
                 If i > 0 Then i -= 1 Else Exit While
             End While
-            terminal.Text = terminal.Text.Remove(i )  'remove TX_buffer from terminal text (it echos back from sentroller)
-            terminal.Text.Replace(vbLf, "")
 
             SerialPort1.WriteLine(tx_buffer)
 
         End If
+    End Sub
+
+
+
+    'exit button event
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        SerialPort1.Close()
+
+
+        'Dim msgboxresponse As MsgBoxResult
+        'msgboxresponse = MsgBox("Are you sure you want to exit?",
+        '                        MsgBoxStyle.Question + MsgBoxStyle.YesNo, Me.Text)
+        'If msgboxresponse <> MsgBoxResult.Yes Then
+        '    e.Cancel = True
+        '    Return
+        'End If
+
     End Sub
 End Class
