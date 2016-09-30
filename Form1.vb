@@ -8,7 +8,7 @@ Imports System.Management
 
 Public Class Form1
 
-    'declare constants (this will be a generated excel file later on...)
+    'declare constants (this will be a generated excel file later on....)
     Public Const shellLockoutPassword = "pa55word"
     Public Const shellLockoutDissable = "shellLockoutDissable"
     Public Const UIcontrolPassword = "UI requesting control..."
