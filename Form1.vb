@@ -19,6 +19,10 @@ Public Class Form1
 
     Dim availablePorts As Array
 
+
+
+
+
     Delegate Sub setTextCallBack(ByVal [text] As String)  'a delegate points to a function (unknown before runtime)
 
 
@@ -28,9 +32,9 @@ Public Class Form1
 
         availablePorts = SerialPort.GetPortNames
 
-
-
-
+        'Initialize all comboBoxes to 1st in list
+        For Each cb In Controls : If TypeName(cb) = "ComboBox" Then cb.text = cb.items(0)
+        Next
 
 
     End Sub
@@ -86,28 +90,25 @@ Public Class Form1
 
 
         If e.KeyData = Keys.Enter Then
-
-            If lastTerminalKey = Keys.Enter Then e.SuppressKeyPress = True : Exit Sub    'leave sub, ignoring "enter" press if nothing was typed
-
-
-            Dim tx_buffer As String
-            Dim i As Integer = terminal.TextLength - 1
-            While terminal.Text(i) <> ">" And terminal.Text(i) <> vbLf
-
-                tx_buffer = terminal.Text(i) & tx_buffer
-                If i > 0 Then i -= 1 Else Exit While
-            End While
-
-
-
-            SerialPort1.WriteLine(tx_buffer)
-
-
-
+            If lastTerminalKey = Keys.Enter Then e.SuppressKeyPress = True : terminal.Text &= ">" : Exit Sub    '<-------------  change to "lastindexof(">")" , e.cance   
+            transmit_terminal()
         End If
         lastTerminalKey = e.KeyData
     End Sub
 
+    Private Sub transmit_terminal()
+        Dim tx_buffer As String = ""
+        Dim i As Integer = terminal.TextLength - 1
+        While terminal.Text(i) <> ">" And terminal.Text(i) <> vbLf  '       <-------------  this can be reduced to "lastindexof()"....     
+
+            tx_buffer = terminal.Text(i) & tx_buffer
+            If i > 0 Then i -= 1 Else Exit While
+        End While
+
+
+
+        SerialPort1.WriteLine(tx_buffer)
+    End Sub
 
 
     'exit button event
@@ -121,9 +122,16 @@ Public Class Form1
         MsgBoxStyle.Question + MsgBoxStyle.YesNo, Me.Text)
         If msgboxresponse <> MsgBoxResult.Yes Then
             e.Cancel = True
-            Return
+            Exit Sub
         End If
-        MsgBox("Fine...fuck you then.........bitch...")
+
+        MsgBox("Fine then....bitch...")
+
+
+
+
+
+
     End Sub
 
     Private Sub SentrollerSearch_Tick(sender As Object, e As EventArgs) Handles SentrollerSearch.Tick
@@ -170,8 +178,53 @@ Public Class Form1
 
     End Sub
 
+    Private Sub afeModeChange(sender As Object, e As EventArgs) _
+        Handles afe0_mh.SelectedIndexChanged, afe1_mh.SelectedIndexChanged, afe2_mh.SelectedIndexChanged, afe3_mh.SelectedIndexChanged,
+            afe0_rtd.SelectedIndexChanged, afe1_rtd.SelectedIndexChanged, afe2_rtd.SelectedIndexChanged, afe3_rtd.SelectedIndexChanged,
+            afe0_burd.SelectedIndexChanged, afe1_burd.SelectedIndexChanged, afe2_burd.SelectedIndexChanged, afe3_burd.SelectedIndexChanged,
+            afe0_hvbyp.SelectedIndexChanged, afe1_hvbyp.SelectedIndexChanged, afe2_hvbyp.SelectedIndexChanged, afe3_hvbyp.SelectedIndexChanged,
+            afe2_gain.SelectedIndexChanged, afe1_gain.SelectedIndexChanged, afe0_gain.SelectedIndexChanged, afe3_gain.SelectedIndexChanged,
+            afe2_mode.SelectedIndexChanged, afe1_mode.SelectedIndexChanged, afe0_mode.SelectedIndexChanged, afe3_mode.SelectedIndexChanged
 
+        If SerialPort1.IsOpen Then
+            Dim tx_buff As String
+            Dim name As String
+            name = sender.name
+            Dim channel As String
+            channel = name.Substring(0, 4)
 
+            Dim config As String = "0x"
+            Dim gain As Int16
+            Dim mode As Int16
+            Dim dec As Int16 = 0
+            For Each cb In Controls : If TypeName(cb) = "ComboBox" Then 'loop through all combo boxes
+                    If cb.Name.Contains(channel) Then   'only does math on comboboxes for the correct channel
+
+                        If cb.Name.Contains("gain") Then : gain = cb.selectedIndex   '(0-7) --> (1,2,4,8,16,32,64,128)
+                        ElseIf cb.Name.Contains("mode") Then : mode = cb.selectedIndex + 1 '(1-4) --> (analog,PC,analog(no harvest),thermoCouple)
+
+                        ElseIf cb.Name.Contains("mh") Then : dec += 8 * cb.selectedIndex    'converts 4 bits to 1 hex --> (tinyurl.com/afe-cheatsheet)
+                        ElseIf cb.Name.Contains("rtd") Then : dec += 4 * cb.selectedIndex
+                        ElseIf cb.Name.Contains("burd") Then : dec += 2 * cb.selectedIndex
+                        ElseIf cb.Name.Contains("hvbyp") Then : dec += 1 * cb.selectedIndex
+                        End If
+                    End If
+                End If
+            Next
+
+            config &= gain
+            config &= mode
+            If dec >= 10 Then : config &= "abcdef"(dec - 10)
+            Else config &= dec
+            End If
+
+            tx_buff = "appdev afe " & channel(3) & " set " & config
+            terminal.Text &= tx_buff
+            transmit_terminal()
+
+        End If
+
+    End Sub
 
 
 End Class
