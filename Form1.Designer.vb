@@ -27,7 +27,6 @@ Partial Class Form1
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.terminal = New System.Windows.Forms.RichTextBox()
         Me.SentrollerSearch = New System.Windows.Forms.Timer(Me.components)
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.afe0_mh = New System.Windows.Forms.ComboBox()
         Me.afe0_rtd = New System.Windows.Forms.ComboBox()
         Me.afe0_burd = New System.Windows.Forms.ComboBox()
@@ -80,13 +79,6 @@ Partial Class Form1
         'SentrollerSearch
         '
         Me.SentrollerSearch.Enabled = True
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(36, 549)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(653, 20)
-        Me.TextBox1.TabIndex = 5
         '
         'afe0_mh
         '
@@ -334,7 +326,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(702, 159)
+        Me.Label1.Location = New System.Drawing.Point(706, 159)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(36, 13)
         Me.Label1.TabIndex = 20
@@ -373,7 +365,6 @@ Partial Class Form1
         Me.Controls.Add(Me.afe0_gain)
         Me.Controls.Add(Me.afe0_mode)
         Me.Controls.Add(Me.afe0_mh)
-        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.terminal)
         Me.Location = New System.Drawing.Point(2000, 30)
         Me.Name = "Form1"
@@ -386,7 +377,6 @@ Partial Class Form1
     Friend WithEvents SerialPort1 As IO.Ports.SerialPort
     Friend WithEvents terminal As RichTextBox
     Friend WithEvents SentrollerSearch As Timer
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents afe0_mh As ComboBox
     Friend WithEvents afe0_rtd As ComboBox
     Friend WithEvents afe0_burd As ComboBox
