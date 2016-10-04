@@ -54,7 +54,7 @@ Partial Class Form1
         Me.afe1_gain = New System.Windows.Forms.ComboBox()
         Me.afe2_gain = New System.Windows.Forms.ComboBox()
         Me.afe3_gain = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'SerialPort1
@@ -67,7 +67,7 @@ Partial Class Form1
         Me.terminal.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.terminal.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.terminal.ForeColor = System.Drawing.Color.Lime
-        Me.terminal.Location = New System.Drawing.Point(36, 12)
+        Me.terminal.Location = New System.Drawing.Point(19, 56)
         Me.terminal.Margin = New System.Windows.Forms.Padding(10, 10, 10, 100)
         Me.terminal.Name = "terminal"
         Me.terminal.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None
@@ -323,14 +323,14 @@ Partial Class Form1
         Me.afe3_gain.Size = New System.Drawing.Size(89, 21)
         Me.afe3_gain.TabIndex = 6
         '
-        'Label1
+        'Label5
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(706, 159)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(36, 13)
-        Me.Label1.TabIndex = 20
-        Me.Label1.Text = "AFE 0"
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(706, 159)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(36, 13)
+        Me.Label5.TabIndex = 19
+        Me.Label5.Text = "AFE 0"
         '
         'Form1
         '
@@ -349,8 +349,8 @@ Partial Class Form1
         Me.Controls.Add(Me.afe1_burd)
         Me.Controls.Add(Me.afe1_rtd)
         Me.Controls.Add(Me.afe1_mh)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.afe0_hvbyp)
@@ -404,5 +404,5 @@ Partial Class Form1
     Friend WithEvents afe1_gain As ComboBox
     Friend WithEvents afe2_gain As ComboBox
     Friend WithEvents afe3_gain As ComboBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents Label5 As Label
 End Class

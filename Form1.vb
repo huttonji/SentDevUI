@@ -157,7 +157,7 @@ Public Class Form1
                             SerialPort1.WriteLine(shellLockoutPassword)
                         Catch
                         End Try
-                        Label1.Visible = False
+
                         terminal.BackColor = Color.FromArgb(40, 40, 45)
                         terminal.ReadOnly = False
                         terminal.SelectionStart = terminal.TextLength
